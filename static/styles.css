@@ -1,0 +1,60 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background: #0e1620;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.Go-logo {
+  height: 40vmin;
+  pointer-events: none;
+  animation: Go-logo-bounce 2s infinite alternate;
+}
+
+@keyframes Go-logo-bounce {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-20px);
+  }
+}
+
+.Go-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #00add8;
+}
+
+.Go-link {
+  color: #f9c846;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1em;
+  transition: color 0.2s;
+}
+
+.Go-link:hover {
+  color: #00add8;
+}
+
+code {
+  background: #1b222c;
+  color: #f9c846;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 1em;
+}
