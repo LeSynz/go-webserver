@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"go-webserver/routes"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -13,6 +14,9 @@ func main() {
 
     routes.RegisterMainRoutes()
     routes.RegisterApiRoutes()
+    // wait 2s
+    time.Sleep(2 * time.Second)
+        fmt.Println("Routes registered. Server is ready to handle requests.")
 
     http.ListenAndServe(":8080", nil)
 }
