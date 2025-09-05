@@ -4,12 +4,13 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 type Todo struct {
-	ID        int
-	Title     string
-	Completed bool
+	ID        int    `json:"id"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
 }
 
 // store the todos in memory
@@ -37,9 +38,35 @@ func RegisterTodo() {
 			log.Printf("Received todo JSON: %+v\n", newTodo)
 			w.WriteHeader(http.StatusOK)
 		case "PUT":
-			w.Write([]byte("PUT Todo Route"))
+			var updatedTodo Todo
+			json.NewDecoder(r.Body).Decode(&updatedTodo)
+			for i, t := range todos {
+				if t.ID == updatedTodo.ID {
+					todos[i] = updatedTodo
+					w.WriteHeader(http.StatusOK)
+					return
+				}
+			}
+			http.Error(w, "Todo not found", http.StatusNotFound)
 		case "DELETE":
-			w.Write([]byte("DELETE Todo Route"))
+			idParam := r.URL.Query().Get("id")
+			if idParam == "" {
+				http.Error(w, "Missing id parameter", http.StatusBadRequest)
+				return
+			}
+			id, err := strconv.Atoi(idParam)
+			if err != nil {
+				http.Error(w, "Invalid id parameter", http.StatusBadRequest)
+				return
+			}
+			for i, t := range todos {
+				if t.ID == id {
+					todos = append(todos[:i], todos[i+1:]...)
+					w.WriteHeader(http.StatusNoContent)
+					return
+				}
+			}
+			http.Error(w, "Todo not found", http.StatusNotFound)
 		default:
 			w.WriteHeader(http.StatusMethodNotAllowed)
 			w.Write([]byte("Method Not Allowed"))
