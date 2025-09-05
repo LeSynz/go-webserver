@@ -14,4 +14,5 @@ func RegisterMainRoutes() {
 func RegisterApiRoutes() {
 	fmt.Println("Registering API routes...")
 	api.RegisterTest()
+	api.RegisterTodo()
 }
